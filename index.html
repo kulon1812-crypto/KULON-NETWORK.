@@ -1,0 +1,305 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KULON NETWORK</title>
+<style>
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  min-height:100vh;
+  background:radial-gradient(circle at 50% 20%,#24103e,#090711 65%);
+  color:white;
+  font-family:Arial,sans-serif;
+  overflow:hidden;
+}
+:root { --purple:#8b20ff; --muted:#a99bc2; }
+#launcher {
+  position:fixed;left:22px;top:42%;
+  width:72px;height:72px;border-radius:50%;
+  background:#100b1d;border:2px solid var(--purple);
+  box-shadow:0 0 25px #8b20ff88;
+  color:#a94aff;font-size:37px;font-weight:bold;
+  display:grid;place-items:center;cursor:grab;
+  z-index:10;user-select:none;
+}
+#panel {
+  position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:min(94vw,430px);
+  max-height:88vh;overflow:auto;
+  padding:17px;
+  background:linear-gradient(145deg,#171020,#0b0913);
+  border:1px solid #7621d9;
+  border-radius:25px;
+  box-shadow:0 0 35px #851dff35;
+  transition:.2s;
+}
+#panel.hidden {display:none}
+.header {
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:20px;
+}
+.logo {
+  width:45px;height:45px;border-radius:14px;
+  background:#781be0;display:grid;place-items:center;
+  font-size:27px;font-weight:bold;
+}
+.brand {font-size:20px;font-weight:bold;letter-spacing:.5px}
+.brand span {color:#a64aff}
+.sub {font-size:12px;color:var(--muted);margin-top:4px}
+.header-actions {margin-left:auto;display:flex;gap:8px}
+.headbtn {
+  width:40px;height:40px;border:0;border-radius:13px;
+  color:white;background:#261a37;font-size:20px;
+  cursor:pointer;
+}
+.tabs {display:flex;gap:8px;margin-bottom:16px}
+.tab {
+  flex:1;padding:13px 5px;border:0;border-radius:13px;
+  background:#21172e;color:#b7a6d1;
+  font-size:13px;font-weight:bold;cursor:pointer;
+}
+.tab.active {
+  background:linear-gradient(110deg,#7115dc,#a12aff);
+  color:white;box-shadow:0 4px 15px #8b20ff44;
+}
+.section {
+  background:#171020;border:1px solid #30213e;
+  border-radius:17px;overflow:hidden;margin-bottom:14px;
+}
+.item {
+  min-height:69px;padding:12px;
+  display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid #30213e;
+}
+.item:last-child {border:0}
+.itemicon {font-size:24px;width:32px;text-align:center;color:#ad70ff}
+.iteminfo {flex:1}
+.itemtitle {font-size:15px;font-weight:bold}
+.itemdesc {font-size:12px;color:var(--muted);margin-top:5px}
+.switch {
+  width:53px;height:29px;border-radius:30px;
+  background:#393047;position:relative;
+  cursor:pointer;transition:.2s;flex-shrink:0;
+}
+.switch:after {
+  content:"";position:absolute;width:21px;height:21px;
+  top:4px;left:4px;border-radius:50%;
+  background:white;transition:.2s;
+}
+.switch.on {background:#922aff}
+.switch.on:after {left:28px}
+.sliderrow {padding:15px}
+.sliderrow input {width:100%;accent-color:#a02aff;margin-top:14px}
+.value {color:#c69aff;float:right}
+.footer {
+  border:1px solid #7621d9;border-radius:16px;
+  padding:14px;background:#28113e;
+  display:flex;align-items:center;gap:12px;
+}
+.footericon {font-size:26px;color:#bd77ff}
+.footertext {flex:1;font-size:14px;font-weight:bold}
+.footer small {display:block;color:#bba5d4;font-weight:normal;margin-top:4px}
+.page {display:none}
+.page.active {display:block}
+.toast {
+  position:fixed;bottom:25px;left:50%;
+  transform:translateX(-50%);
+  background:#29153e;border:1px solid #933cff;
+  padding:12px 20px;border-radius:12px;
+  font-size:13px;opacity:0;pointer-events:none;
+  transition:.2s;z-index:20;
+}
+.toast.show {opacity:1}
+</style>
+</head>
+<body>
+
+<div id="launcher">K</div>
+
+<div id="panel">
+  <div class="header">
+    <div class="logo">♛</div>
+    <div>
+      <div class="brand">KULON <span>NETWORK</span></div>
+      <div class="sub">Standoff 2 • iOS Edition</div>
+    </div>
+    <div class="header-actions">
+      <button class="headbtn" id="settings">⚙</button>
+      <button class="headbtn" id="minimize">−</button>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-page="aim">⊕ AIM</button>
+    <button class="tab" data-page="visuals">◉ VISUALS</button>
+    <button class="tab" data-page="skins">♜ SKINS</button>
+  </div>
+
+  <div class="page active" id="aim">
+    <div class="section">
+      <div class="item">
+        <div class="itemicon">⊕</div>
+        <div class="iteminfo">
+          <div class="itemtitle">Aim Interface</div>
+          <div class="itemdesc">Демонстрационный режим</div>
+        </div>
+        <div class="switch"></div>
+      </div>
+      <div class="item">
+        <div class="itemicon">◎</div>
+        <div class="iteminfo">
+          <div class="itemtitle">Smooth Interface</div>
+          <div class="itemdesc">Настройка отображения</div>
+        </div>
+        <div class="switch"></div>
+      </div>
+      <div class="sliderrow">
+        <b>FOV Preview</b>
+        <span class="value" id="fovValue">90°</span>
+        <input type="range" min="30" max="180" value="90" id="fov">
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="visuals">
+    <div class="section">
+      <div class="item">
+        <div class="itemicon">◉</div>
+        <div class="iteminfo">
+          <div class="itemtitle">HUD Theme</div>
+          <div class="itemdesc">Фиолетовая тема интерфейса</div>
+        </div>
+        <div class="switch on"></div>
+      </div>
+      <div class="item">
+        <div class="itemicon">▣</div>
+        <div class="iteminfo">
+          <div class="itemtitle">FPS Counter</div>
+          <div class="itemdesc">Демонстрационный счётчик</div>
+        </div>
+        <div class="switch"></div>
+      </div>
+      <div class="item">
+        <div class="itemicon">✦</div>
+        <div class="iteminfo">
+          <div class="itemtitle">Glow Effects</div>
+          <div class="itemdesc">Эффекты оформления</div>
+        </div>
+        <div class="switch on"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="skins">
+    <div class="section">
+      <div class="item">
+        <div class="itemicon">🔪</div>
+        <div class="iteminfo">
+          <div class="itemtitle">Knife Collection</div>
+          <div class="itemdesc">Витрина коллекции</div>
+        </div>
+        <div class="switch"></div>
+      </div>
+      <div class="item">
+        <div class="itemicon">♜</div>
+        <div class="iteminfo">
+          <div class="itemtitle">Weapon Collection</div>
+          <div class="itemdesc">Просмотр оружия</div>
+        </div>
+        <div class="switch"></div>
+      </div>
+      <div class="item">
+        <div class="itemicon">✧</div>
+        <div class="iteminfo">
+          <div class="itemtitle">Custom Theme</div>
+          <div class="itemdesc">Оформление коллекции</div>
+        </div>
+        <div class="switch on"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footericon">➤</div>
+    <div class="footertext">
+      KULON NETWORK
+      <small>Personal iOS Edition</small>
+    </div>
+    <div style="font-size:25px;color:#b66aff">♛</div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Настройка сохранена</div>
+
+<script>
+const panel = document.getElementById('panel');
+const launcher = document.getElementById('launcher');
+const toast = document.getElementById('toast');
+
+function notify(message) {
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(()=>toast.classList.remove('show'),1600);
+}
+
+launcher.onclick = () => panel.classList.toggle('hidden');
+document.getElementById('minimize').onclick = () => panel.classList.add('hidden');
+
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.onclick = () => {
+    document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(tab.dataset.page).classList.add('active');
+  };
+});
+
+document.querySelectorAll('.switch').forEach((sw,index)=>{
+  const saved = localStorage.getItem('kulon_switch_'+index);
+  if(saved !== null) sw.classList.toggle('on',saved==='true');
+
+  sw.onclick = () => {
+    sw.classList.toggle('on');
+    localStorage.setItem('kulon_switch_'+index,sw.classList.contains('on'));
+    notify('Настройка сохранена');
+  };
+});
+
+const fov = document.getElementById('fov');
+const fovValue = document.getElementById('fovValue');
+fov.value = localStorage.getItem('kulon_fov') || 90;
+fovValue.textContent = fov.value+'°';
+fov.oninput = () => {
+  fovValue.textContent = fov.value+'°';
+  localStorage.setItem('kulon_fov',fov.value);
+};
+
+document.getElementById('settings').onclick = () => notify('KULON NETWORK • Version 1.0');
+
+let drag = false, moved = false, startX, startY, startLeft, startTop;
+launcher.addEventListener('pointerdown',e=>{
+  drag=true;moved=false;
+  startX=e.clientX;startY=e.clientY;
+  const r=launcher.getBoundingClientRect();
+  startLeft=r.left;startTop=r.top;
+  launcher.setPointerCapture(e.pointerId);
+});
+launcher.addEventListener('pointermove',e=>{
+  if(!drag)return;
+  let dx=e.clientX-startX,dy=e.clientY-startY;
+  if(Math.abs(dx)+Math.abs(dy)>5)moved=true;
+  if(moved){
+    launcher.style.left=Math.max(0,Math.min(innerWidth-72,startLeft+dx))+'px';
+    launcher.style.top=Math.max(0,Math.min(innerHeight-72,startTop+dy))+'px';
+  }
+});
+launcher.addEventListener('pointerup',()=>{drag=false;});
+
+</script>
+</body>
+</html>
