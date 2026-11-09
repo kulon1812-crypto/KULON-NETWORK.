@@ -1,0 +1,23 @@
+workflows:
+  ios-build:
+    name: KULON NETWORK iOS
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      xcode: latest
+    scripts:
+      - name: Prepare project
+        script: |
+          npm install -g @capacitor/cli
+          npm init -y
+          npm install @capacitor/core @capacitor/ios
+          npx cap init "KULON NETWORK" "com.kulon.network" --web-dir=www
+          mkdir -p www
+          cp index.html www/index.html
+          npx cap add ios
+          npx cap sync ios
+      - name: Build iOS app
+        script: |
+          xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Release -sdk iphoneos -destination 'generic/platform=iOS' -archivePath build/App.xcarchive archive CODE_SIGNING_ALLOWED=NO
+    artifacts:
+      - build/App.xcarchive/**
